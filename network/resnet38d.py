@@ -2,10 +2,7 @@ import torch
 from torch import nn
 import numpy as np
 import pdb
-
 import torch.nn.functional as F
-from tool.amm import AMM
-from tool.aaf import AAF
 from tool.cca import CrissCrossAttention
 
 class ResBlock(nn.Module):
@@ -162,16 +159,6 @@ class Net(nn.Module):
 
         self.normalize = Normalize()
 
-        # self.amm512 = AMM(512, 4)
-        # self.amm1024 = AMM(1024, 4)
-        # self.amm4096 = AMM(4096, 4)
-        # self.aaf512 = AAF(512)
-        # self.aaf1024 = AAF(1024)
-        # self.aaf4096 = AAF(4096)
-        # self.cca1 = CrissCrossAttention(512)
-        # self.cca2 = CrissCrossAttention(1024)
-        # self.cca3 = CrissCrossAttention(2048)
-
         return
 
     def forward(self, x):
@@ -189,53 +176,29 @@ class Net(nn.Module):
         x = self.b2(x)
         x = self.b2_1(x)
         x = self.b2_2(x) # 128 112 112
-        # print(x.shape)
-        # x = AMM(x.shape[1], 16)(x)
-
         x = self.b3(x)
         x = self.b3_1(x)
         x = self.b3_2(x)
-        # x = AMM(x.shape[1], 16)(x)
-
-
         x = self.b4(x)
         x = self.b4_1(x)
         x = self.b4_2(x)
         x = self.b4_3(x)
         x = self.b4_4(x)
         x = self.b4_5(x)
-        # print(x.shape)
-        # x = self.aaf512(x)
-        # x = self.cca1(x)
-        # x = self.cca1(x)
-        # x = CrissCrossAttention(512).cuda()(x)
-        # x = PAM_Module(512).cuda()(x)
-        # x = CrissCrossAttention(512).cuda()(x)
-
-
+        x = CrissCrossAttention(512).cuda()(x)
+        x = PAM_Module(512).cuda()(x)
+        x = CrissCrossAttention(512).cuda()(x)
         x, conv4 = self.b5(x, get_x_bn_relu=True)
         x = self.b5_1(x)
         x = self.b5_2(x)
-        # print(x.shape)
-        # x = self.aaf1024(x)
-        # x = self.cca2(x)
-        # x = self.cca2(x)
-        # x = CrissCrossAttention(1024).cuda()(x)
-        # x = PAM_Module(1024).cuda()(x)
-        # x = CrissCrossAttention(1024).cuda()(x)
-
-
+        x = CrissCrossAttention(1024).cuda()(x)
+        x = PAM_Module(1024).cuda()(x)
+        x = CrissCrossAttention(1024).cuda()(x)
         x, conv5 = self.b6(x, get_x_bn_relu=True)
-        # x = self.cca3(x)
-        # x = self.cca3(x)
-        # x = CrissCrossAttention(2048).cuda()(x)
-        # x = PAM_Module(2048).cuda()(x)
-        # x = CrissCrossAttention(2048).cuda()(x)
-
+        x = CrissCrossAttention(2048).cuda()(x)
+        x = PAM_Module(2048).cuda()(x)
+        x = CrissCrossAttention(2048).cuda()(x)
         x = self.b7(x)
-        # print(x.shape)
-        # x = self.cca4096(x)
-
         at_map = self.bn7(x)
         conv6 = F.relu(self.bn7(x))
         # pdb.set_trace()
@@ -317,7 +280,6 @@ def convert_mxnet_to_torch(filename):
     return renamed_dict
 
 class PAM_Module(nn.Module):
-    """空间注意力模块"""
     def __init__(self, in_dim):
         super(PAM_Module, self).__init__()
         self.chanel_in = in_dim
