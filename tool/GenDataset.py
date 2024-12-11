@@ -58,7 +58,7 @@ class Stage1_TrainDataset(Dataset):
                 image_path = os.path.join(root, f)
                 fname = f[:-4]
                 label_str = fname.split(']')[0].split('[')[-1]
-                elif self.dataset == 'ring':
+                if self.dataset == 'ring':
                     image_label = torch.Tensor([int(label_str[0]), int(label_str[1])])
                 elif self.dataset == 'glas':
                     image_label = torch.Tensor([int(label_str[3]), int(label_str[0])])
