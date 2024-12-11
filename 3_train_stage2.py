@@ -213,7 +213,7 @@ def main():
     parser.add_argument('--gpu-ids', type=str, default='0')
     parser.add_argument('--seed', type=int, default=1, metavar='S')
     # checking point
-    parser.add_argument('--resume', type=str, default='/init_weights/stage3_segmentation.pth')
+    parser.add_argument('--resume', type=str, default=None)
     parser.add_argument('--checkname', type=str, default='deeplab-resnet')
     parser.add_argument('--ft', action='store_true', default=False)
     parser.add_argument('--eval-interval', type=int, default=1)
