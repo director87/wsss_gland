@@ -15,6 +15,25 @@ The necessary packages can be installed through the following command:
 pip install -r requirements.txt
 ```
 
+## Datasets
+* ProG
+
+## Pretrained weights
+Download the pretained weight of classification stage from [this link](https://drive.google.com/drive/folders/1oc4BNEREZG2gZ78IzEwZZjC4Y0fTshRC?usp=drive_link), and put it into `init_weights` folder.
+
+## Run the whole pipeline
+### 1. Train the classification model
+```
+python 1_train_stage1.py --dataset ring --trainroot datasets/RINGS/train/ --testroot dataset/RINGS/test/
+```
+### 2. Generate pseudo masks
+```
+python 2_generate_PM.py --dataroot datasets/RINGS --dataset ring
+```
+### 3. Train the segmentation model
+```
+python 3_train_stage2.py --dataset ring --dataroot datasets/RINGS
+```
 
 ## Contact
 If you have any question, please contact <director87@foxmail.com>.
