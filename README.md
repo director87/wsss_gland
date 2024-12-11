@@ -16,7 +16,39 @@ pip install -r requirements.txt
 ```
 
 ## Datasets
-* ProG
+* [ProG](https://data.mendeley.com/datasets/h8bdwrtnr5/1) \[1\]
+* [GlaS](https://pan.baidu.com/share/init?surl=htY5nZacceXj_m2FlY8uXw) \[2\] (code: snb3) 
+* [EBHI](https://figshare.com/articles/dataset/EBHI-SEG/21540159/1?file=38179080) \[3\]
+
+Download the datasets and put them into `datasets` folder with following formats:
+```
+|-- datasets  
+    |-- RINGS/  
+        |-- train/  
+        |-- val/  
+            |-- img/  
+            |-- mask/  
+        |-- test/  
+            |-- img/  
+            |-- mask/  
+    |-- GlaS/  
+        |-- train/  
+        |-- val/  
+            |-- img/  
+            |-- mask/  
+        |-- test/  
+            |-- img/  
+            |-- mask/
+    |-- EBHI/  
+        |-- train/  
+        |-- val/  
+            |-- img/  
+            |-- mask/  
+        |-- test/  
+            |-- img/  
+            |-- mask/
+```
+
 
 ## Pretrained weights
 Download the pretained weight of classification stage from [this link](https://drive.google.com/drive/folders/1oc4BNEREZG2gZ78IzEwZZjC4Y0fTshRC?usp=drive_link), and put it into `init_weights` folder.
@@ -34,6 +66,13 @@ python 2_generate_PM.py --dataroot datasets/RINGS --dataset ring
 ```
 python 3_train_stage2.py --dataset ring --dataroot datasets/RINGS
 ```
+
+## References
+\[1\] Salvi et al. A hybrid deep learning approach for gland segmentation in prostate histopathological images. In *Artificial Intelligence in Medicine*, 2021
+
+\[2\] Sirinukunwattana et al. Gland segmentation in colon histology images: The glas challenge contest. In *Medical Image Analysis*, 2017
+
+\[3\] Shi et al. EBHI-Seg: A novel enteroscope biopsy histopathological hematoxylin and eosin image dataset for image segmentation tasks. In *Frontiers in Medicine*, 2023
 
 ## Contact
 If you have any question, please contact <director87@foxmail.com>.
