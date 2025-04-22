@@ -76,3 +76,17 @@ python 3_train_stage2.py --dataset ring --dataroot datasets/RINGS
 
 ## Contact
 If you have any question, please contact <director87@foxmail.com>.
+
+## Citation
+If you find this code repository useful, please consider citing our paper:
+```
+@inproceedings{feng2025weakly,
+  title={Weakly Supervised Gland Segmentation with Class Semantic Consistency and Purified Labels Filtration},
+  author={Feng, Siyang and Wang, Huadeng and Han, Chu and Liu, Zhenbing and Zhang, Hualong and Lan, Rushi and Pan, Xipeng},
+  booktitle={Proceedings of the AAAI Conference on Artificial Intelligence},
+  volume={39},
+  number={3},
+  pages={2987--2995},
+  year={2025}
+}
+```
