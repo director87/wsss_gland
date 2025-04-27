@@ -18,6 +18,15 @@ from tool.infer_fun import infer
 cudnn.enabled = True
 
 
+def compute_acc(pred_labels, gt_labels):
+    pred_correct_count = 0
+    for pred_label in pred_labels:
+        if pred_label in gt_labels:
+            pred_correct_count += 1
+    union = len(gt_labels) + len(pred_labels) - pred_correct_count
+    acc = round(pred_correct_count/union, 4)
+    return acc
+
 def train_phase(args):
     # viz = Visdom(env=args.env_name)
     model = getattr(importlib.import_module(args.network), 'Net')(args.init_gama, n_class=args.n_class)
@@ -77,7 +86,7 @@ def train_phase(args):
                 enable_AMM = 0
                 enable_NAEA = 0
                 enable_MARS = 0
-            x, feature, y, cam1 = model(img.cuda(), enable_PDA=0, enable_AMM=0, enable_NAEA=0, enable_MARS=0)
+            x, feature, y, cam1 = model(img.cuda(), enable_PDA=0, enable_AMM=0, enable_NAEA=0)
             prob = y.cpu().data.numpy()
             gt = label.cpu().data.numpy()
             for num, one in enumerate(prob):
